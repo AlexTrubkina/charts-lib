@@ -20,7 +20,8 @@ export const handleMouseMove = (
   ref: RefObject<HTMLCanvasElement>,
   coords: { x: number; y: number; color?: string }[],
   height: number,
-  columnWidth: number, width: number
+  columnWidth: number,
+  width: number
 ) => {
   const canvasRect = ref?.current?.getBoundingClientRect();
   if (canvasRect) {
@@ -42,16 +43,34 @@ export const handleMouseMove = (
       height: item.y * ratioY,
     }));
 
-    const ctx = ref.current?.getContext("2d")
+    const ctx = ref.current?.getContext("2d");
 
     for (let i = 0; i < rects.length; i++) {
+      ctx?.clearRect(rects[i].x + 15, rects[i].y + 10, 100, 50);
       if (isInsideRect(mouseX, mouseY, rects[i])) {
         hoveredRect = rects[i];
-        console.log(hoveredRect);
-        
+
+        if (ctx) {
+          drawTooltip(ctx, hoveredRect.x, hoveredRect.y);
+        }
         break;
       }
     }
-
   }
+};
+
+const drawTooltip = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
+  ctx.beginPath();
+  ctx.fillStyle = "pink";
+  ctx.strokeStyle = "pink";
+  ctx.roundRect(x + 15, y + 10, 100, 50);
+  ctx.fill();
+  ctx.closePath();
+  ctx.beginPath();
+  ctx.fillStyle = "#fff";
+  ctx.font = "16px sans-serif";
+  ctx.fillText("Hello world", x + 20, y + 40);
+  
+  ctx.fill();
+  ctx.closePath();
 };
