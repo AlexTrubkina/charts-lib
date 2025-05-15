@@ -1,6 +1,6 @@
 import { RefObject } from "react";
 
-export const drawAxis = (ref: RefObject<HTMLCanvasElement> | null, width: number, height: number, xAxis=true, yAxis=true) => {
+export const drawAxis = (ref: RefObject<HTMLCanvasElement | null> | null, width: number, height: number, xAxis=true, yAxis=true) => {
     if (ref && ref.current) {
       const ctx = ref.current.getContext("2d");
       if (xAxis) {

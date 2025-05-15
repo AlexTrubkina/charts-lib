@@ -1,6 +1,6 @@
 import { RefObject } from "react";
-import { countMax } from "../../../lib/countMax";
-import { countRatio } from "../../../lib/countRatio";
+import { countMax } from "../../../utils/countMax";
+import { countRatio } from "../../../utils/countRatio";
 
 export const drawChart = (
   ref: RefObject<HTMLCanvasElement> | null,

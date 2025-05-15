@@ -1,5 +1,5 @@
 import { MouseEvent, useEffect, useRef } from "react";
-import { drawAxis } from "../../../lib/drawAxis";
+import { drawAxis } from "../../../utils/drawAxis";
 import { drawChart } from "../lib/drawChart";
 import { ColumnChartProps } from "../types";
 import { handleMouseMove } from "../lib/handleHover";
@@ -13,7 +13,7 @@ export const ColumnChart = ({
   chartName = "",
   columnColor = "#6FC6E8",
 }: ColumnChartProps) => {
-  const ref = useRef<HTMLCanvasElement>(null);
+  const ref = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     drawAxis(ref, height, width, xAxis, yAxis);

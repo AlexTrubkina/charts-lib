@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { LineChartProps } from "../types";
-import { drawAxis } from "../../../lib/drawAxis";
+import { drawAxis } from "../../../utils/drawAxis";
 import { drawChart } from "../lib/drawChart";
 
 export const LineChart = ({

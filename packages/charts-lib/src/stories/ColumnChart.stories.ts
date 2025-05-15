@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ColumnChart } from '../packages/charts-lib/src/components/ColumnChart';
+import { ColumnChart } from '../index';
 
 const meta = {
   title: 'Components/ColumnChart',

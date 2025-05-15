@@ -1,6 +1,6 @@
 import { RefObject, MouseEvent } from "react";
-import { countMax } from "../../../lib/countMax";
-import { countRatio } from "../../../lib/countRatio";
+import { countMax } from "../../../utils/countMax";
+import { countRatio } from "../../../utils/countRatio";
 
 export const isInsideRect = (
   mouseX: number,
@@ -17,7 +17,7 @@ export const isInsideRect = (
 
 export const handleMouseMove = (
   event: MouseEvent<HTMLCanvasElement>,
-  ref: RefObject<HTMLCanvasElement>,
+  ref: RefObject<HTMLCanvasElement | null>,
   coords: { x: number; y: number; color?: string }[],
   height: number,
   columnWidth: number,
