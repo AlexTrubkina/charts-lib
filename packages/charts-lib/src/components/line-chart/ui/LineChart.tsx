@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { LineChartProps } from "../types";
 import { drawAxis } from "../../../utils/drawAxis";
 import { drawChart } from "../lib/drawChart";
+import {setResolution} from "../../../utils/setResolution.ts";
 
 export const LineChart = ({
   coords = [{ x: 0, y: 0 }],
@@ -15,6 +16,7 @@ export const LineChart = ({
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    setResolution(ref);
     drawAxis(ref, height, width, xAxis, yAxis);
     drawChart(ref, coords, width, height);
   }, []);
