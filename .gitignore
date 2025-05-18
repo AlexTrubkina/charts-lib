@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 
 *storybook.log
+storybook-static/
+
+.cursorrules
+
+.turbo
