@@ -3,6 +3,7 @@ import { drawAxis } from "../../../utils/drawAxis";
 import { drawChart } from "../lib/drawChart";
 import { ColumnChartProps } from "../types";
 import { handleMouseMove } from "../lib/handleHover";
+import {setResolution} from "../../../utils/setResolution.ts";
 export const ColumnChart = ({
   width = 300,
   height = 300,
@@ -16,9 +17,11 @@ export const ColumnChart = ({
   const ref = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
+    setResolution(ref);
     drawAxis(ref, height, width, xAxis, yAxis);
     drawChart(ref, coords, height, width, columnWidth, columnColor);
   }, []);
+
   return (
     <canvas
       ref={ref}
