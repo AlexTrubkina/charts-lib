@@ -16,13 +16,13 @@
     ".": {
       "import": "./dist/my-lib.js",
       "require": "./dist/my-lib.umd.cjs"
-      
     }
   },
   "dependencies": {
+    "@charts-lib/renderer": "../renderer/src",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "@charts-lib/renderer": "../renderer/src"
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

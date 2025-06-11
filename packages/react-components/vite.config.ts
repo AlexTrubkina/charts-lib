@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import tsconfigPaths from 'vite-tsconfig-paths'
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 import { resolve } from 'path'
@@ -6,16 +7,8 @@ import { resolve } from 'path'
 export default defineConfig({
   plugins: [
     react(),
-    dts({
-      include: [resolve(__dirname, 'src/**/*')],
-      tsconfigPath: resolve(__dirname, 'tsconfig.json'),
-      rollupTypes: true,
-      // Critical for monorepos:
-      compilerOptions: {
-        preserveSymlinks: true,
-        baseUrl: __dirname
-      }
-    })
+    dts(),
+    tsconfigPaths()
   ],
   build: {
     lib: {

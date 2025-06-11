@@ -11,11 +11,16 @@
     "release": "turbo run build --filter=docs^... && changeset publish"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ],
   "paths": {
-    "@charts-lib/renderer": ["./packages/renderer/src"],
-    "@charts-lib/react-components": ["./packages/react-components/src"]
+    "@charts-lib/renderer": [
+      "./packages/renderer/src"
+    ],
+    "@charts-lib/react-components": [
+      "./packages/react-components/src"
+    ]
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
