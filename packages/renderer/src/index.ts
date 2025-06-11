@@ -1,1 +1,2 @@
-export { BaseRenderer } from "./core/BaseRenderer";
+export { BaseChartRenderer } from "./core/BaseRenderer";
+export { LineChartRenderer } from "./charts/LineChart";

@@ -1,8 +1,8 @@
 import { MouseEvent, useEffect, useRef } from "react";
-import { drawAxis } from "../../../utils/drawAxis";
-import { drawChart } from "../lib/drawChart";
-import { ColumnChartProps } from "../types";
-import { handleMouseMove } from "../lib/handleHover";
+import { drawAxis } from "../../../utils/drawAxis.ts";
+import { drawChart } from "../lib/drawChart.ts";
+import { ColumnChartProps } from "../types.ts";
+import { handleMouseMove } from "../lib/handleHover.ts";
 import {setResolution} from "../../../utils/setResolution.ts";
 export const ColumnChart = ({
   width = 300,

@@ -1,7 +1,7 @@
 {
-  "name": "charts-lib",
+  "name": "@charts-lib/react-components",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -16,11 +16,13 @@
     ".": {
       "import": "./dist/my-lib.js",
       "require": "./dist/my-lib.umd.cjs"
+      
     }
   },
   "dependencies": {
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "@charts-lib/renderer": "../renderer/src"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

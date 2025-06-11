@@ -1,23 +1,31 @@
-interface BaseConfig {
-  width?: number;
-  height?: number;
-  columnWidth?: number;
-  xAxis?: boolean;
-  yAxis?: boolean;
-  coords: { x: number; y: number; color?: string }[];
-  chartName?: string;
-  columnColor?: string;
+
+
+// In your renderer package
+interface IChartRenderer {
+  render(): void;
+  resize(width: number, height: number): void;
+  destroy(): void;
 }
 
-export class BaseRenderer {
-  config: BaseConfig;
-
-  constructor(config: BaseConfig) {
-    this.config = config;
+export abstract class BaseChartRenderer implements IChartRenderer {
+  protected canvas: HTMLCanvasElement;
+  protected ctx: CanvasRenderingContext2D;
+  
+  constructor(canvas: HTMLCanvasElement) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d')!;
   }
-
-  private countMaxCoord(coord: "x" | "y") {
-    const coordsArray = this.config.coords.map((item) => item[coord]);
-    return Math.max.apply(null, coordsArray);
+  
+  abstract render(): void;
+  
+  resize(width: number, height: number): void {
+    this.canvas.width = width;
+    this.canvas.height = height;
+    this.render();
+  }
+  
+  destroy(): void {
+    // Cleanup logic
   }
 }
+

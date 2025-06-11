@@ -10,6 +10,13 @@
     "version-packages": "changeset version",
     "release": "turbo run build --filter=docs^... && changeset publish"
   },
+  "workspaces": [
+    "packages/*"
+  ],
+  "paths": {
+    "@charts-lib/renderer": ["./packages/renderer/src"],
+    "@charts-lib/react-components": ["./packages/react-components/src"]
+  },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
     "prettier": "^3.2.5",
