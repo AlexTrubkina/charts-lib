@@ -15,8 +15,19 @@ export const LineChart = ({
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    // const chart = new LineChartRenderer()
-  }, []);
+    if (ref.current) {
+      new LineChartRenderer(ref.current, {
+        coords, 
+        xAxis,
+        yAxis,
+        chartName,
+        width,
+        height,
+        columnColor: color
+      })
+    }
+    
+  }, [ref, ref.current]);
 
   return <canvas ref={ref} width={width} height={height}></canvas>;
 };
