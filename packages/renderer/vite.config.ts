@@ -10,6 +10,14 @@ export default defineConfig({
       name: 'charts-lib-render',
       fileName: 'charts-lib-render',
     },
+    rollupOptions: {
+      external: ['react'],
+      output: {
+        globals: {
+          react: 'React'
+        }
+      }
+    }
   },
   plugins: [dts()],
 })

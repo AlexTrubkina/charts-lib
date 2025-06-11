@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
     resolve: {
     alias: {
-      '@charts': path.resolve(__dirname, '../../packages/charts-lib'),
+      '@charts': path.resolve(__dirname, '../../packages/react-components'),
     },
   },
 })

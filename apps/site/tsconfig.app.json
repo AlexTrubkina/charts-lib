@@ -8,7 +8,7 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@charts/*": ["../../packages/chart-lib"]
+      "@charts/*": ["../../packages/react-components"]
     },
 
     /* Bundler mode */
@@ -27,5 +27,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": [".", "../../packages/charts-lib/src/**/*"]
+  "include": [".", "../../packages/react-components/src/**/*"]
 }
