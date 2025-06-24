@@ -16,15 +16,17 @@ export const LineChart = ({
 
   useEffect(() => {
     if (ref.current) {
-      new LineChartRenderer(ref.current, {
+      const lineChart = new LineChartRenderer(ref.current, {
         coords, 
         xAxis,
         yAxis,
         chartName,
         width,
         height,
-        columnColor: color
+        columnColor: color,
+        columnWidth: 10
       })
+      lineChart.render()
     }
     
   }, [ref, ref.current]);

@@ -1,6 +1,6 @@
 export default {
   stories: [
-    '../../../packages/charts-lib/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+    '../../../packages/react-components/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
   addons: ['@storybook/addon-essentials'],
   framework: {

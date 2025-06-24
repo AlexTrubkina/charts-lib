@@ -1,9 +1,7 @@
 import { MouseEvent, useEffect, useRef } from "react";
-import { drawAxis } from "../../../utils/drawAxis.ts";
-import { drawChart } from "../lib/drawChart.ts";
 import { ColumnChartProps } from "../types.ts";
 import { handleMouseMove } from "../lib/handleHover.ts";
-import {setResolution} from "../../../utils/setResolution.ts";
+import { ColumnChartRenderer } from "@charts-lib/renderer";
 export const ColumnChart = ({
   width = 300,
   height = 300,
@@ -17,10 +15,20 @@ export const ColumnChart = ({
   const ref = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
-    setResolution(ref);
-    drawAxis(ref, height, width, xAxis, yAxis);
-    drawChart(ref, coords, height, width, columnWidth, columnColor);
-  }, []);
+    if (ref.current) {
+      const columnChart = new ColumnChartRenderer(ref.current, {
+        coords,
+        xAxis,
+        yAxis,
+        chartName,
+        width,
+        height,
+        columnColor: columnColor,
+        columnWidth: 10,
+      });
+      columnChart.render();
+    }
+  }, [ref, ref.current]);
 
   return (
     <canvas

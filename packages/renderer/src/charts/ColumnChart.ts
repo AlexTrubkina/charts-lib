@@ -3,7 +3,7 @@ import { ChartOptions } from "../types";
 
 const BASE_COLOR = "#6FC6E8";
 
-export class LineChartRenderer extends BaseChartRenderer {
+export class ColumnChartRenderer extends BaseChartRenderer {
   private options: ChartOptions;
 
   constructor(canvas: HTMLCanvasElement, options: ChartOptions) {
@@ -20,28 +20,27 @@ export class LineChartRenderer extends BaseChartRenderer {
     return graphSize / maxCoord;
   };
 
-  drawDots(ratioX: number, ratioY: number, color = "#6FC6E8") {
-    this.options.coords.forEach((coord) => {
-      this.ctx.beginPath();
-      this.ctx.arc(coord.x * ratioX, coord.y * ratioY, 3, 0, Math.PI * 2, true);
-      this.ctx.fillStyle = color;
-      this.ctx.fill();
-      this.ctx.strokeStyle = color;
-    });
-  }
-
-  drawLines(ratioX: number, ratioY: number, color = "#6FC6E8") {
+  drawColumn(
+    coord: { x: number; y: number; color?: string },
+    index: number,
+    ratioX: number,
+    ratioY: number
+  ): void {
     this.ctx.beginPath();
-    this.ctx.moveTo(
-      this.options.coords[0].x * ratioX,
-      this.options.coords[0].y * ratioY
+    if (coord.color) {
+      this.ctx.fillStyle = coord.color;
+      this.ctx.strokeStyle = coord.color;
+    } else {
+      this.ctx.fillStyle = this.options.columnColor || BASE_COLOR;
+      this.ctx.strokeStyle = this.options.columnColor || BASE_COLOR;
+    }
+    this.ctx.roundRect(
+      index * 15 * ratioX + 20,
+      this.options.height - coord.y * ratioY - 20,
+      this.options.columnWidth,
+      coord.y * ratioY
     );
-    this.options.coords.forEach((coord) => {
-      this.ctx.lineTo(coord.x * ratioX, coord.y * ratioY);
-    });
-
-    this.ctx.strokeStyle = color;
-    this.ctx.stroke();
+    this.ctx.fill();
   }
 
   drawAxis(): void {
@@ -56,15 +55,16 @@ export class LineChartRenderer extends BaseChartRenderer {
   }
 
   render(): void {
-    const width = this.options.width || 300;
-    const height = this.options.height || 300;
-    const color = this.options.columnColor || BASE_COLOR;
+    this.setResolution()
+    const width = this.options.width;
+    const height = this.options.height;
     const maxOfX = this.countMax("x");
     const maxOfY = this.countMax("y");
     const ratioX = this.countRatio(maxOfX, width - 30);
     const ratioY = this.countRatio(maxOfY, height - 30);
-    this.drawAxis();
-    this.drawDots(ratioX, ratioY, color);
-    this.drawLines(ratioX, ratioY, color);
+    this.ctx.clearRect;
+    this.options.coords.forEach((coord, index) => {
+      this.drawColumn(coord, index, ratioX, ratioY);
+    });
   }
 }
