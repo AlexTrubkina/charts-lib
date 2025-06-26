@@ -84,8 +84,10 @@ export class ColumnChartRenderer extends BaseChartRenderer {
       height: item.y * ratioY,
     }));
 
+
+
     for (let i = 0; i < rects.length; i++) {
-      if (this.isInsideRect(mouseXCtx, mouseYCtx, rects[i])) {
+      if (this.isInsideRect(mouseXCtx, mouseYCtx, rects[i]) && this.state.interaction.hoveredItem?.position.x !== rects[i].x) {
         this.state.setHoveredItem({
           position: {
             x: rects[i].x,
@@ -112,5 +114,6 @@ export class ColumnChartRenderer extends BaseChartRenderer {
     this.options.coords.forEach((coord, index) => {
       this.drawColumn(coord, index, ratioX, ratioY);
     });
+    this.drawAxis()
   }
 }

@@ -24,7 +24,7 @@ export const ColumnChart = ({
         width,
         height,
         columnColor: columnColor,
-        columnWidth: 10,
+        columnWidth: columnWidth,
       });
       columnChart.render();
     }
