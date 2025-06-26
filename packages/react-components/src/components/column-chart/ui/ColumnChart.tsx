@@ -1,6 +1,6 @@
-import { MouseEvent, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { ColumnChartProps } from "../types.ts";
-import { handleMouseMove } from "../lib/handleHover.ts";
+
 import { ColumnChartRenderer } from "@charts-lib/renderer";
 export const ColumnChart = ({
   width = 300,
@@ -35,9 +35,7 @@ export const ColumnChart = ({
       ref={ref}
       width={width}
       height={height}
-      onMouseMove={(event: MouseEvent<HTMLCanvasElement>) =>
-        handleMouseMove(event, ref, coords, height, columnWidth, width)
-      }
+  
     ></canvas>
   );
 };

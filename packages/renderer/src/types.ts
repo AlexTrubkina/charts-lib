@@ -8,3 +8,15 @@ export interface ChartOptions {
   chartName?: string;
   columnColor?: string;
 }
+
+export interface InteractionState {
+  hoveredItem: HoveredItem | null;
+  clickedItem: HoveredItem | null;
+  zoomLevel: number;
+  panOffset: { x: number, y: 0 };
+}
+
+export interface HoveredItem {
+  position: { x: number, y: number };
+  value: number;
+}

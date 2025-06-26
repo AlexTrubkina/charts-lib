@@ -3,22 +3,20 @@ import { ChartOptions } from "../types";
 
 const BASE_COLOR = "#6FC6E8";
 
+interface ColumnRect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 export class ColumnChartRenderer extends BaseChartRenderer {
-  private options: ChartOptions;
-
   constructor(canvas: HTMLCanvasElement, options: ChartOptions) {
-    super(canvas);
+    super(canvas, options);
     this.options = options;
-  }
 
-  countMax(coord: "x" | "y") {
-    const coordsArray = this.options.coords.map((item) => item[coord]);
-    return Math.max.apply(null, coordsArray);
+    this.setupEventListeners();
   }
-
-  countRatio = (maxCoord: number, graphSize: number) => {
-    return graphSize / maxCoord;
-  };
 
   drawColumn(
     coord: { x: number; y: number; color?: string },
@@ -54,8 +52,56 @@ export class ColumnChartRenderer extends BaseChartRenderer {
     this.ctx.stroke();
   }
 
+  isInsideRect(mouseX: number, mouseY: number, rect: ColumnRect) {
+    return (
+      mouseX >= rect.x &&
+      mouseX <= rect.x + rect.width &&
+      mouseY >= rect.y &&
+      mouseY <= rect.y + rect.height
+    );
+  }
+
+  private setupEventListeners(): void {
+    // Mouse move for tooltips
+    this.addEventListener('mousemove', (e: MouseEvent) => this.handleHoverColumn(e.clientX, e.clientY));
+  }
+
+  handleHoverColumn(mouseX: number, mouseY: number) {
+    const canvasRect = this.canvas.getBoundingClientRect();
+    const mouseXCtx = mouseX - canvasRect.left;
+    const mouseYCtx = mouseY - canvasRect.top;
+
+    const maxOfY = this.countMax("y");
+    const ratioY = this.countRatio(maxOfY, this.options.height - 30);
+
+    const maxOfX = this.countMax("x");
+    const ratioX = this.countRatio(maxOfX, this.options.width - 30);
+
+    const rects = this.options.coords.map((item, index) => ({
+      x: index * 15 * ratioX + 20,
+      y: this.options.height - item.y * ratioY - 20,
+      width: this.options.columnWidth,
+      height: item.y * ratioY,
+    }));
+
+    for (let i = 0; i < rects.length; i++) {
+      if (this.isInsideRect(mouseXCtx, mouseYCtx, rects[i])) {
+        this.state.setHoveredItem({
+          position: {
+            x: rects[i].x,
+            y: rects[i].y,
+          },
+          value: rects[i].y,
+        });
+
+        this.tooltip.draw();
+        break;
+      }
+    }
+  }
+
   render(): void {
-    this.setResolution()
+    this.setResolution();
     const width = this.options.width;
     const height = this.options.height;
     const maxOfX = this.countMax("x");

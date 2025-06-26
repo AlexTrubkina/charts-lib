@@ -4,21 +4,11 @@ import { ChartOptions } from "../types";
 const BASE_COLOR = "#6FC6E8";
 
 export class LineChartRenderer extends BaseChartRenderer {
-  private options: ChartOptions;
 
   constructor(canvas: HTMLCanvasElement, options: ChartOptions) {
-    super(canvas);
+    super(canvas, options);
     this.options = options;
   }
-
-  countMax(coord: "x" | "y") {
-    const coordsArray = this.options.coords.map((item) => item[coord]);
-    return Math.max.apply(null, coordsArray);
-  }
-
-  countRatio = (maxCoord: number, graphSize: number) => {
-    return graphSize / maxCoord;
-  };
 
   drawDots(ratioX: number, ratioY: number, color = "#6FC6E8") {
     this.options.coords.forEach((coord) => {
