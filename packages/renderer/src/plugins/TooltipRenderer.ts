@@ -10,6 +10,30 @@ export class TooltipRenderer {
     this.state = state;
   }
 
+  removeTooltip (): void {
+    const hoveredItem: HoveredItem | null = this.state.interaction.hoveredItem;
+    if (!hoveredItem) return;
+    const { position} = hoveredItem;
+    const tooltipWidth = 120;
+    const tooltipHeight = 40;
+
+    let x = position.x + 10;
+    let y = position.y - tooltipHeight - 10;
+    if (x + tooltipWidth > this.ctx.canvas.width) {
+      x = this.ctx.canvas.width - tooltipWidth - 5;
+    }
+    if (y < 5) {
+      y = position.y + 20;
+    }
+    this.ctx.clearRect(
+      x - 1,
+      y - 1,
+      tooltipWidth + 2,
+      tooltipHeight + 2
+    );
+    this.state.setHoveredItem(null)
+  }
+
   draw(): void {
     const hoveredItem: HoveredItem | null = this.state.interaction.hoveredItem;
     if (!hoveredItem) return;

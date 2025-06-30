@@ -63,7 +63,10 @@ export class ColumnChartRenderer extends BaseChartRenderer {
 
   private setupEventListeners(): void {
     // Mouse move for tooltips
-    this.addEventListener('mousemove', (e: MouseEvent) => this.handleHoverColumn(e.clientX, e.clientY));
+    //@ts-ignore
+    this.addEventListener("mousemove", (e: MouseEvent) =>
+      this.handleHoverColumn(e.clientX, e.clientY)
+    );
   }
 
   handleHoverColumn(mouseX: number, mouseY: number) {
@@ -84,10 +87,13 @@ export class ColumnChartRenderer extends BaseChartRenderer {
       height: item.y * ratioY,
     }));
 
-
-
     for (let i = 0; i < rects.length; i++) {
-      if (this.isInsideRect(mouseXCtx, mouseYCtx, rects[i]) && this.state.interaction.hoveredItem?.position.x !== rects[i].x) {
+      this.tooltip.removeTooltip();
+      this.render()
+      if (
+        this.isInsideRect(mouseXCtx, mouseYCtx, rects[i]) &&
+        this.state.interaction.hoveredItem?.position.x !== rects[i].x
+      ) {
         this.state.setHoveredItem({
           position: {
             x: rects[i].x,
@@ -97,7 +103,7 @@ export class ColumnChartRenderer extends BaseChartRenderer {
         });
 
         this.tooltip.draw();
-        break;
+        return;
       }
     }
   }
@@ -114,6 +120,6 @@ export class ColumnChartRenderer extends BaseChartRenderer {
     this.options.coords.forEach((coord, index) => {
       this.drawColumn(coord, index, ratioX, ratioY);
     });
-    this.drawAxis()
+    this.drawAxis();
   }
 }
