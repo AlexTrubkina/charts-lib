@@ -26,7 +26,7 @@ export abstract class BaseChartRenderer implements IChartRenderer {
     this.ctx = canvas.getContext("2d")!;
     this.state = new ChartState(options);
     this.options = options;
-    this.tooltip = new TooltipRenderer(this.ctx, this.state);
+    this.tooltip = new TooltipRenderer(this.ctx, this.state, this.options);
     this.XAxis = new XAxis(
       this.ctx,
       this.options,
@@ -89,8 +89,7 @@ export abstract class BaseChartRenderer implements IChartRenderer {
 
   drawYAxis(): void {
     const maxY = this.countMax("y") 
-    const ratioY = this.countRatio(maxY, this.options.height + 10);
-    this.YAxis.draw(ratioY, maxY);
+    this.YAxis.draw(maxY);
   }
 
   public update(options?: ChartOptions): void {

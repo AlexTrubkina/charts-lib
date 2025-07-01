@@ -11,6 +11,9 @@ interface ColumnRect {
 }
 
 export class ColumnChartRenderer extends BaseChartRenderer {
+
+  #padding = this.options.padding || 10
+
   constructor(canvas: HTMLCanvasElement, options: ChartOptions) {
     super(canvas, options);
     this.options = options;
@@ -21,11 +24,9 @@ export class ColumnChartRenderer extends BaseChartRenderer {
   drawColumn(
     coord: { x: number; y: number; color?: string },
     ratioX: number,
-    ratioY: number,
     maxY: number
   ): void {
     this.ctx.beginPath();
-    const padding = this.options.padding || 10;
     if (coord.color) {
       this.ctx.fillStyle = coord.color;
       this.ctx.strokeStyle = coord.color;
@@ -33,10 +34,10 @@ export class ColumnChartRenderer extends BaseChartRenderer {
       this.ctx.fillStyle = this.options.columnColor || BASE_COLOR;
       this.ctx.strokeStyle = this.options.columnColor || BASE_COLOR;
     }
-    const x1 = coord.x * ratioX - padding;
-    const x2 =  (coord.x * ratioX - padding) + this.options.columnWidth;
+    const x1 = coord.x * ratioX - this.#padding;
+    const x2 =  (coord.x * ratioX - this.#padding) + this.options.columnWidth;
     const y1 = this.options.height - (coord.y / maxY) * this.options.height;
-    const y2 = this.options.height - padding * 2;
+    const y2 = this.options.height - this.#padding * 2;
     this.ctx.moveTo(x1, y1);
     this.ctx.lineTo(x1, y2)
     this.ctx.lineTo(x2, y2);
@@ -77,16 +78,14 @@ export class ColumnChartRenderer extends BaseChartRenderer {
     const mouseXCtx = mouseX - canvasRect.left;
     const mouseYCtx = mouseY - canvasRect.top;
 
-    const padding = this.options.padding || 10
-
     const maxOfY = this.countMax("y");
-    const ratioY = this.countRatio(maxOfY, this.options.height - padding);
+    const ratioY = this.countRatio(maxOfY, this.options.height - this.#padding);
 
     const maxOfX = this.countMax("x");
-    const ratioX = this.countRatio(maxOfX, this.options.width - padding);
+    const ratioX = this.countRatio(maxOfX, this.options.width - this.#padding);
 
     const rects = this.options.coords.map((item) => ({
-      x: item.x * ratioX - padding,
+      x: item.x * ratioX - this.#padding,
       y: this.options.height - (item.y / maxOfY) * this.options.height,
       width: this.options.columnWidth,
       height: item.y * ratioY,
@@ -115,16 +114,13 @@ export class ColumnChartRenderer extends BaseChartRenderer {
 
   render(): void {
     this.setResolution();
-    const padding = this.options.padding || 10
     const width = this.options.width;
-    const height = this.options.height;
     const maxOfX = this.countMax("x");
     const maxOfY = this.countMax("y");
-    const ratioX = this.countRatio(maxOfX, width - padding);
-    const ratioY = this.countRatio(maxOfY, height - padding);
+    const ratioX = this.countRatio(maxOfX, width - this.#padding);
     this.ctx.clearRect;
     this.options.coords.forEach((coord) => {
-      this.drawColumn(coord, ratioX, ratioY, maxOfY);
+      this.drawColumn(coord, ratioX, maxOfY);
     });
     this.setUpAxes();
   }

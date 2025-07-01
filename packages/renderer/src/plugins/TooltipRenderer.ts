@@ -1,26 +1,28 @@
 import { ChartState } from '../core/ChartState';
-import { HoveredItem } from '../types';
+import { ChartOptions, HoveredItem } from '../types';
 
 export class TooltipRenderer {
   private ctx: CanvasRenderingContext2D;
   private state: ChartState;
+  private options: ChartOptions
 
-  constructor(ctx: CanvasRenderingContext2D, state: ChartState) {
+  constructor(ctx: CanvasRenderingContext2D, state: ChartState, options: ChartOptions) {
     this.ctx = ctx;
     this.state = state;
+    this.options = options
   }
 
   removeTooltip (): void {
     const hoveredItem: HoveredItem | null = this.state.interaction.hoveredItem;
     if (!hoveredItem) return;
-    const { position} = hoveredItem;
+    const { position } = hoveredItem;
     const tooltipWidth = 120;
     const tooltipHeight = 40;
 
     let x = position.x + 10;
     let y = position.y - tooltipHeight - 10;
-    if (x + tooltipWidth > this.ctx.canvas.width) {
-      x = this.ctx.canvas.width - tooltipWidth - 5;
+    if (x + tooltipWidth > this.options.width) {
+      x = this.options.width - tooltipWidth - 5;
     }
     if (y < 5) {
       y = position.y + 20;
@@ -52,8 +54,10 @@ export class TooltipRenderer {
     let x = position.x + 10;
     let y = position.y - tooltipHeight - 10;
     
-    if (x + tooltipWidth > this.ctx.canvas.width) {
-      x = this.ctx.canvas.width - tooltipWidth - 5;
+    if (x + tooltipWidth > this.options.width) {
+      x = this.options.width - tooltipWidth - 5;
+      console.log("x2: ", x);
+      
     }
     if (y < 5) {
       y = position.y + 20;

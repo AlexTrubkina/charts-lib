@@ -28,7 +28,7 @@ export class YAxis extends AxisBase {
     this.ctx.stroke();
   }
 
-  draw( ratioY: number, maxY: number): void {
+  draw( maxY: number): void {
     const height = this.options.height;
     const padding = this.options.padding || 10;
 
