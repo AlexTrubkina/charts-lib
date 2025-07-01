@@ -1,4 +1,4 @@
-import {  ChartOptions, HoveredItem, InteractionState } from '../types';
+import type {  ChartOptions, HoveredItem, InteractionState } from '../types';
 
 export class ChartState {
   private _options: ChartOptions;

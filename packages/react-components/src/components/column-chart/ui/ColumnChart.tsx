@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { ColumnChartProps } from "../types.ts";
+import type { ColumnChartProps } from "../types.ts";
 
 import { ColumnChartRenderer } from "@charts-lib/renderer";
 export const ColumnChart = ({

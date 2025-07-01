@@ -1,5 +1,5 @@
 import { ChartState } from '../core/ChartState';
-import { ChartOptions, HoveredItem } from '../types';
+import type { ChartOptions, HoveredItem } from '../types';
 
 export class TooltipRenderer {
   private ctx: CanvasRenderingContext2D;

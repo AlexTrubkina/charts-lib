@@ -1,7 +1,7 @@
 import { XAxis } from "../axes/XAxis";
 import { YAxis } from "../axes/YAxis";
 import { TooltipRenderer } from "../plugins/TooltipRenderer";
-import { ChartOptions } from "../types";
+import type { ChartOptions } from "../types";
 import { ChartState } from "./ChartState";
 
 // In your renderer package
@@ -17,7 +17,7 @@ export abstract class BaseChartRenderer implements IChartRenderer {
   protected state: ChartState;
   protected options: ChartOptions;
   protected tooltip: TooltipRenderer;
-  private _eventListeners: Array<[string, any]> = [];
+  private _eventListeners: Array<[string, EventListener]> = [];
   protected XAxis: XAxis;
   protected YAxis: YAxis
 
@@ -74,7 +74,7 @@ export abstract class BaseChartRenderer implements IChartRenderer {
 
   protected addEventListener(
     type: string,
-    listener: EventListenerOrEventListenerObject,
+    listener: EventListener,
     options?: AddEventListenerOptions
   ): void {
     this.canvas.addEventListener(type, listener, options);
