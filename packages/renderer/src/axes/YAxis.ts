@@ -53,8 +53,8 @@ export class YAxis extends AxisBase {
 
     labels.forEach((label) => {    
         const yPos =( height - (label / maxY) * height);
-        this.drawTick({x: padding * 2, y: yPos - padding }, 5)
-        this.drawLabel(label.toString(), {x: 7, y: yPos - padding })
+        this.drawTick({x: padding * 2, y: yPos}, 5)
+        this.drawLabel(label.toString(), {x: 7, y: yPos })
     })
   }
 }
