@@ -39,7 +39,7 @@ export class TooltipRenderer {
     if (!hoveredItem) return;
 
     const { position, value } = hoveredItem;
-    const padding = 8;
+    const padding = 10;
     const tooltipWidth = 120;
     const tooltipHeight = 40;
 

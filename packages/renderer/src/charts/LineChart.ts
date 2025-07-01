@@ -34,26 +34,25 @@ export class LineChartRenderer extends BaseChartRenderer {
     this.ctx.stroke();
   }
 
-  drawAxis(): void {
+  setUpAxes(): void {
     if (this.options.xAxis) {
-      this.drawXAxis((this.options.height = 300), (this.options.width = 300));
+      this.drawXAxis();
     }
     if (this.options.yAxis) {
-      this.drawYAxis((this.options.height = 300));
+      this.drawYAxis();
     }
-    this.ctx.strokeStyle = "#000";
-    this.ctx.stroke();
   }
 
   render(): void {
+    const padding = this.options.padding || 10
     const width = this.options.width || 300;
     const height = this.options.height || 300;
     const color = this.options.columnColor || BASE_COLOR;
     const maxOfX = this.countMax("x");
     const maxOfY = this.countMax("y");
-    const ratioX = this.countRatio(maxOfX, width - 30);
-    const ratioY = this.countRatio(maxOfY, height - 30);
-    this.drawAxis();
+    const ratioX = this.countRatio(maxOfX, width - padding);
+    const ratioY = this.countRatio(maxOfY, height - padding);
+    this.setUpAxes();
     this.drawDots(ratioX, ratioY, color);
     this.drawLines(ratioX, ratioY, color);
   }

@@ -7,6 +7,7 @@ export interface ChartOptions {
   coords: { x: number; y: number; color?: string }[];
   chartName?: string;
   columnColor?: string;
+  padding?: number
 }
 
 export interface InteractionState {

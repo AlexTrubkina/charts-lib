@@ -41,15 +41,13 @@ export class ColumnChartRenderer extends BaseChartRenderer {
     this.ctx.fill();
   }
 
-  drawAxis(): void {
+  setUpAxes(): void {
     if (this.options.xAxis) {
-      this.drawXAxis((this.options.height = 300), (this.options.width = 300));
+      this.drawXAxis()
     }
     if (this.options.yAxis) {
-      this.drawYAxis((this.options.height = 300));
+      this.drawYAxis();
     }
-    this.ctx.strokeStyle = "#000";
-    this.ctx.stroke();
   }
 
   isInsideRect(mouseX: number, mouseY: number, rect: ColumnRect) {
@@ -74,11 +72,13 @@ export class ColumnChartRenderer extends BaseChartRenderer {
     const mouseXCtx = mouseX - canvasRect.left;
     const mouseYCtx = mouseY - canvasRect.top;
 
+    const padding = this.options.padding || 10
+
     const maxOfY = this.countMax("y");
-    const ratioY = this.countRatio(maxOfY, this.options.height - 30);
+    const ratioY = this.countRatio(maxOfY, this.options.height - padding);
 
     const maxOfX = this.countMax("x");
-    const ratioX = this.countRatio(maxOfX, this.options.width - 30);
+    const ratioX = this.countRatio(maxOfX, this.options.width - padding);
 
     const rects = this.options.coords.map((item, index) => ({
       x: index * 15 * ratioX + 20,
@@ -99,7 +99,7 @@ export class ColumnChartRenderer extends BaseChartRenderer {
             x: rects[i].x,
             y: rects[i].y,
           },
-          value: rects[i].y,
+          value: this.options.coords[i].y,
         });
 
         this.tooltip.draw();
@@ -110,16 +110,17 @@ export class ColumnChartRenderer extends BaseChartRenderer {
 
   render(): void {
     this.setResolution();
+    const padding = this.options.padding || 10
     const width = this.options.width;
     const height = this.options.height;
     const maxOfX = this.countMax("x");
     const maxOfY = this.countMax("y");
-    const ratioX = this.countRatio(maxOfX, width - 30);
-    const ratioY = this.countRatio(maxOfY, height - 30);
+    const ratioX = this.countRatio(maxOfX, width - padding);
+    const ratioY = this.countRatio(maxOfY, height - padding);
     this.ctx.clearRect;
     this.options.coords.forEach((coord, index) => {
       this.drawColumn(coord, index, ratioX, ratioY);
     });
-    this.drawAxis();
+    this.setUpAxes();
   }
 }
