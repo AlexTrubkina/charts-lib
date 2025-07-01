@@ -15,6 +15,7 @@ export const ColumnChart = ({
   const ref = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
+    console.count('[ColumnChart] ColumnChart useEffected')
     if (ref.current) {
       const columnChart = new ColumnChartRenderer(ref.current, {
         coords,
@@ -28,7 +29,7 @@ export const ColumnChart = ({
       });
       columnChart.render();
     }
-  }, [ref, ref.current]);
+  }, [chartName, columnColor, columnWidth, coords, height, ref, width, xAxis, yAxis]);
 
   return (
     <canvas
