@@ -4,12 +4,14 @@ import { ChartOptions, HoveredItem } from '../types';
 export class TooltipRenderer {
   private ctx: CanvasRenderingContext2D;
   private state: ChartState;
-  private options: ChartOptions
+  private options: ChartOptions;
+  private padding: number;
 
   constructor(ctx: CanvasRenderingContext2D, state: ChartState, options: ChartOptions) {
     this.ctx = ctx;
     this.state = state;
-    this.options = options
+    this.options = options;
+    this.padding = this.options.padding || 10;
   }
 
   removeTooltip (): void {
@@ -41,7 +43,6 @@ export class TooltipRenderer {
     if (!hoveredItem) return;
 
     const { position, value } = hoveredItem;
-    const padding = 10;
     const tooltipWidth = 120;
     const tooltipHeight = 40;
 
@@ -70,7 +71,7 @@ export class TooltipRenderer {
     this.ctx.fillStyle = '#fff';
     this.ctx.font = '12px Arial';
     this.ctx.textAlign = 'left';
-    this.ctx.fillText(`Value: ${value.toFixed(2)}`, x + padding, y + padding * 2);
+    this.ctx.fillText(`Value: ${value.toFixed(2)}`, x + this.padding, y + this.padding * 2);
   }
 
   private _drawRoundedRect(x: number, y: number, width: number, height: number, radius: number): void {
