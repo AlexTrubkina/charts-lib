@@ -1,4 +1,4 @@
-import { ChartOptions } from "../types";
+import type { ChartOptions } from "../types";
 
 
 export abstract class AxisBase {

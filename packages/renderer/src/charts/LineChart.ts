@@ -1,11 +1,11 @@
 import { BaseChartRenderer } from "../core/BaseRenderer";
-import { ChartOptions } from "../types";
+import type { ChartOptions } from "../types";
 
 const BASE_COLOR = "#6FC6E8";
 
 export class LineChartRenderer extends BaseChartRenderer {
-  #maxOfY = this.countMax("y");
-  #padding = this.options.padding || 10;
+  private maxOfY = this.countMax("y");
+  private padding = this.options.padding || 10;
 
   constructor(canvas: HTMLCanvasElement, options: ChartOptions) {
     super(canvas, options);
@@ -19,7 +19,7 @@ export class LineChartRenderer extends BaseChartRenderer {
       this.ctx.beginPath();
       this.ctx.arc(
         coord.x * ratioX,
-        this.options.height - (coord.y / this.#maxOfY) * this.options.height,
+        this.options.height - (coord.y / this.maxOfY) * this.options.height,
         3,
         0,
         Math.PI * 2,
@@ -36,12 +36,12 @@ export class LineChartRenderer extends BaseChartRenderer {
     this.ctx.moveTo(
       this.options.coords[0].x * ratioX,
       this.options.height -
-        (this.options.coords[0].y / this.#maxOfY) * this.options.height
+        (this.options.coords[0].y / this.maxOfY) * this.options.height
     );
     this.options.coords.forEach((coord) => {
       this.ctx.lineTo(
         coord.x * ratioX,
-        this.options.height - (coord.y / this.#maxOfY) * this.options.height
+        this.options.height - (coord.y / this.maxOfY) * this.options.height
       );
     });
 
@@ -60,8 +60,11 @@ export class LineChartRenderer extends BaseChartRenderer {
 
   private setupEventListeners(): void {
     // Mouse move for tooltips
-    //@ts-ignore
-    this.addEventListener("mousemove", (e: MouseEvent) => this.handleHoverPoint(e.clientX, e.clientY));
+    this.addEventListener("mousemove", (e: Event) => {
+      if (e instanceof MouseEvent) {
+        this.handleHoverPoint(e.clientX, e.clientY);
+      }
+    });
   }
 
   private isOnPoint(
@@ -88,13 +91,13 @@ export class LineChartRenderer extends BaseChartRenderer {
     const mouseYCtx = mouseY - canvasRect.top;
 
     const maxOfY = this.countMax("y");
-    const ratioY = this.countRatio(maxOfY, this.options.height - this.#padding);
+    const ratioY = this.countRatio(maxOfY, this.options.height - this.padding);
 
     const maxOfX = this.countMax("x");
-    const ratioX = this.countRatio(maxOfX, this.options.width - this.#padding);
+    const ratioX = this.countRatio(maxOfX, this.options.width - this.padding);
 
     const rects = this.options.coords.map((item) => ({
-      x: item.x * ratioX - this.#padding,
+      x: item.x * ratioX - this.padding,
       y: this.options.height - (item.y / maxOfY) * this.options.height,
       width: this.options.columnWidth,
       height: item.y * ratioY,
@@ -126,7 +129,7 @@ export class LineChartRenderer extends BaseChartRenderer {
     const width = this.options.width || 300;
     const color = this.options.columnColor || BASE_COLOR;
     const maxOfX = this.countMax("x");
-    const ratioX = this.countRatio(maxOfX, width - this.#padding);
+    const ratioX = this.countRatio(maxOfX, width - this.padding);
     this.ctx.clearRect;
     this.setUpAxes();
     this.drawDots(ratioX, color);

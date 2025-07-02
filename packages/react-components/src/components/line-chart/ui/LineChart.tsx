@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { LineChartProps } from "../types";
+import type { LineChartProps } from "../types";
 import {LineChartRenderer} from '@charts-lib/renderer'
 
 
@@ -15,6 +15,7 @@ export const LineChart = ({
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    console.count('[LineChart] LineChart useEffected')
     if (ref.current) {
       const lineChart = new LineChartRenderer(ref.current, {
         coords, 
@@ -29,7 +30,7 @@ export const LineChart = ({
       lineChart.render()
     }
     
-  }, [ref, ref.current]);
+  }, [ref, coords, xAxis, yAxis, chartName, width, height, color]);
 
   return <canvas ref={ref} width={width} height={height}></canvas>;
 };

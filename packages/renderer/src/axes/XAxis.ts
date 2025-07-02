@@ -1,5 +1,5 @@
 // packages/renderer/src/axes/XAxis.ts
-import { ChartOptions } from "../types";
+import type { ChartOptions } from "../types";
 import { AxisBase } from "./AxisBase";
 
 export class XAxis extends AxisBase {
