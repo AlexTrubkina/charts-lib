@@ -28,8 +28,20 @@ export class YAxis extends AxisBase {
     this.ctx.stroke();
   }
 
+  drawGrid(position: { x: number; y: number }, length: number): void {
+    const gridColor = "#f4f4f4";
+
+    this.ctx.beginPath();
+    this.ctx.moveTo(position.x, position.y);
+    this.ctx.lineTo(position.x  + length, position.y);
+    this.ctx.strokeStyle = gridColor;
+    this.ctx.lineWidth = 1;
+    this.ctx.stroke();
+  }
+
   draw( maxY: number): void {
     const height = this.options.height;
+    const width = this.options.width;
     const padding = this.options.padding || 10;
 
     const minY = padding;
@@ -54,6 +66,7 @@ export class YAxis extends AxisBase {
     labels.forEach((label) => {    
         const yPos =( height - (label / maxY) * height);
         this.drawTick({x: padding * 2, y: yPos + padding }, 5)
+        this.drawGrid({x: padding * 2.5, y: yPos + padding }, width)
         this.drawLabel(label.toString(), {x: 7, y: yPos + padding})
     })
   }
