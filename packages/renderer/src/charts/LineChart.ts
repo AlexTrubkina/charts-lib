@@ -16,15 +16,10 @@ export class LineChartRenderer extends BaseChartRenderer {
 
   drawDots(ratioX: number, color = BASE_COLOR) {
     this.options.coords.forEach((coord) => {
+      const yPos =
+        this.options.height - (coord.y / this.maxOfY) * this.options.height;
       this.ctx.beginPath();
-      this.ctx.arc(
-        coord.x * ratioX,
-        this.options.height - (coord.y / this.maxOfY) * this.options.height,
-        3,
-        0,
-        Math.PI * 2,
-        true
-      );
+      this.ctx.arc(coord.x * ratioX, yPos + this.padding, 3, 0, Math.PI * 2, true);
       this.ctx.fillStyle = color;
       this.ctx.fill();
       this.ctx.strokeStyle = color;
@@ -33,16 +28,15 @@ export class LineChartRenderer extends BaseChartRenderer {
 
   drawLines(ratioX: number, color = BASE_COLOR) {
     this.ctx.beginPath();
-    this.ctx.moveTo(
-      this.options.coords[0].x * ratioX,
+
+    const yPosFrom =
       this.options.height -
-        (this.options.coords[0].y / this.maxOfY) * this.options.height
-    );
+      (this.options.coords[0].y / this.maxOfY) * this.options.height;
+    this.ctx.moveTo(this.options.coords[0].x * ratioX, yPosFrom + this.padding);
     this.options.coords.forEach((coord) => {
-      this.ctx.lineTo(
-        coord.x * ratioX,
-        this.options.height - (coord.y / this.maxOfY) * this.options.height
-      );
+      const yPosTo =
+        this.options.height - (coord.y / this.maxOfY) * this.options.height;
+      this.ctx.lineTo(coord.x * ratioX, yPosTo + this.padding);
     });
 
     this.ctx.strokeStyle = color;
@@ -96,12 +90,16 @@ export class LineChartRenderer extends BaseChartRenderer {
     const maxOfX = this.countMax("x");
     const ratioX = this.countRatio(maxOfX, this.options.width - this.padding);
 
-    const rects = this.options.coords.map((item) => ({
-      x: item.x * ratioX - this.padding,
-      y: this.options.height - (item.y / maxOfY) * this.options.height,
-      width: this.options.columnWidth,
-      height: item.y * ratioY,
-    }));
+    const rects = this.options.coords.map((item) => {
+      const yPos =
+        this.options.height - (item.y / maxOfY) * this.options.height;
+      return {
+        x: item.x * ratioX - this.padding,
+        y: yPos + this.padding,
+        width: this.options.columnWidth,
+        height: item.y * ratioY,
+      };
+    });
 
     for (let i = 0; i < rects.length; i++) {
       this.tooltip.removeTooltip();
